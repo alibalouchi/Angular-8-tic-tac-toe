@@ -1,0 +1,4 @@
+.divRow{
+    display: flex;
+    flex-direction: row;
+}
