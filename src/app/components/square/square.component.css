@@ -12,3 +12,7 @@ div {
 div:hover {
     background-color: #BDBDBD;
 }
+
+.winner {
+    background-color: green;
+}
