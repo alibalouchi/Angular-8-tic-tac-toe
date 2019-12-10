@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { WinnercheckService } from '../../winnercheck.service'
+import { resolve } from 'url';
+import { reject } from 'q';
 
 @Component({
   selector: 'app-board',
@@ -19,13 +21,24 @@ addSymbol(id: number) {
   if (this.board[id]) return;
   this.board[id] = (this.xTurn ? "X" : "O") ;
   this.xTurn = !this.xTurn;
+  this.winCheck()
 }
 
 handleSquareClick(index:number){
-  (this.winner.find(item => item == true) ? this.haveWinner = true : this.haveWinner = false);
-  if(this.haveWinner == false) this.addSymbol(index)
+  if(this.haveWinner == false) this.addSymbol(index);
+  (this.winner.find(item => item == true) ? this.haveWinner = true 
+    : this.haveWinner = false);
   let indexes = this.winnercheckService.checkWinner(this.board)
   indexes.map(item => this.winner[item] = true)
+}
+
+winCheck(){
+  if (this.board.filter(item => typeof item == "string").length == 9){
+    (this.winner.find(item => item == true) ? this.haveWinner = true 
+    : this.haveWinner = false);
+  let indexes = this.winnercheckService.checkWinner(this.board)
+  indexes.map(item => this.winner[item] = true)
+  }
 }
 
 handleReset(){
